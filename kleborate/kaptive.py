@@ -15,22 +15,21 @@ not, see <http://www.gnu.org/licenses/>.
 import os
 import subprocess
 import sys
+import shutil
 import tempfile
 
 
 def get_kaptive_paths():
-    this_file = os.path.realpath(__file__)
-    kaptive_dir = os.path.join(os.path.dirname(os.path.dirname(this_file)), 'kaptive')
+    kaptive_py = shutil.which('kaptive.py')
+    kaptive_dir = os.path.join(os.path.dirname(os.path.dirname(kaptive_py)), 'opt/kaptive_reference_database')
     if not os.path.isdir(kaptive_dir):
         sys.exit('Error: could not find Kaptive directory. Did you git clone with --recursive?')
-    kaptive_py = os.path.join(kaptive_dir, 'kaptive.py')
     if not os.path.isfile(kaptive_py):
         sys.exit('Error: could not find kaptive.py')
-    db_dir = os.path.join(kaptive_dir, 'reference_database')
-    kaptive_k_db = os.path.join(db_dir, 'Klebsiella_k_locus_primary_reference.gbk')
+    kaptive_k_db = os.path.join(kaptive_dir, 'Klebsiella_k_locus_primary_reference.gbk')
     if not os.path.isfile(kaptive_k_db):
         sys.exit('Error: could not find Klebsiella_k_locus_primary_reference.gbk')
-    kaptive_o_db = os.path.join(db_dir, 'Klebsiella_o_locus_primary_reference.gbk')
+    kaptive_o_db = os.path.join(kaptive_dir, 'Klebsiella_o_locus_primary_reference.gbk')
     if not os.path.isfile(kaptive_o_db):
         sys.exit('Error: could not find Klebsiella_o_locus_primary_reference.gbk')
     return kaptive_py, kaptive_k_db, kaptive_o_db
